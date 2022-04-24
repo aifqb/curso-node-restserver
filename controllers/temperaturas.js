@@ -1,13 +1,24 @@
-const { response } = require('express');
+const { response, request } = require('express');
+
 
 const Temperatura = require('../models/temperatura');
 
-const temperaturasGet = (req, res = response) => {
-
+const temperaturasGet = async(req = request, res = response) => {
     
+    const { limit = 3, desde = 0 } = req.query;
+
+    const [ total, mediciones ] = await Promise.all([
+        Temperatura.countDocuments(),
+        Temperatura.find()
+            .skip(Number( desde ))
+            .limit(Number( limit ))
+    ]);
+
     res.json({
-        msg: 'Get de peraturas corriendo'
+        total,
+        mediciones
     });
+    
 }
 
 

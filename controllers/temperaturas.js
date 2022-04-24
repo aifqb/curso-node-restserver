@@ -5,20 +5,24 @@ const Temperatura = require('../models/temperatura');
 
 const temperaturasGet = async(req = request, res = response) => {
     
-    const { limit = 3, desde = 0 } = req.query;
+    // const { limite = 5, desde = 0 } = req.query;
 
-    const [ total, mediciones ] = await Promise.all([
-        Temperatura.countDocuments(),
-        Temperatura.find()
-            .skip(Number( desde ))
-            .limit(Number( limit ))
-    ]);
+    // const [ total, mediciones ] = await Promise.all([
+    //     Temperatura.countDocuments(),
+    //     Temperatura.find()
+    //         .skip(Number( desde ))
+    //         .limit(Number( limite ))
+    // ]);
 
-    res.json({
-        total,
-        mediciones
-    });
+    // res.json({
+    //     total,
+    //     mediciones
+    // });
     
+
+    const data = await Temperatura.find();
+
+    res.json(data);
 }
 
 
